@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import Header from './header/header';
+import Home from './home/home';
 
 const App = () => (
   <div>
-    <Header/>
-    <div className="main-app">
-    </div>
+    <Home/>
   </div>
 );
 
