@@ -50,8 +50,21 @@ class Home extends React.Component {
     return newGrid;
   }
 
+  tranposeGrid() {
+    let grid = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
+    for (var i = 0; i < 4; i++) {
+      for (var j = 0; j < 4; j++) {
+        grid[i][j] = this.state.grid[j][i];
+      }
+    }
+    return grid;
+  }
+
+  untranposeGrid() {
+    
+  }
+
   handleKey(e) {
-    console.log(e.key);
     switch (e.key) {
       case 'ArrowUp':
         let upGrid = this.addBlock(this.state.grid.slice(0));
@@ -63,7 +76,7 @@ class Home extends React.Component {
         this.setState( {grid: downGrid} );
         break;
       case 'ArrowLeft':
-
+        let leftGrid = this.addBlock(this.tranposeGrid());
       case 'ArrowRight':
 
       default:
