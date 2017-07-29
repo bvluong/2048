@@ -5,25 +5,14 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      block01: 2,
-      block02: 0,
-      block03: 0,
-      block04: 0,
-      block11: 0,
-      block12: 2,
-      block13: 0,
-      block14: 0,
-      block21: 2,
-      block22: 4,
-      block23: 0,
-      block24: 0,
-      block31: 0,
-      block32: 0,
-      block33: 0,
-      block34: 0
+      block01: 2, block02: 0, block03: 0, block04: 0,
+      block11: 2, block12: 2, block13: 0, block14: 0,
+      block21: 2, block22: 4, block23: 0, block24: 0,
+      block31: 0, block32: 0, block33: 0, block34: 0
     };
-    this.createRow.bind(this);
-    this.handleKey.bind(this);
+    this.createRow = this.createRow.bind(this);
+    this.handleKey = this.handleKey.bind(this);
+    this.arrowUp = this.arrowUp.bind(this);
   }
 
   componentDidMount() {
@@ -42,10 +31,17 @@ class Home extends React.Component {
     return row;
   }
 
+
+  arrowUp() {
+    if (this.state.block01 === this.state.block11) {
+      this.setState( {block01: this.state.block01*2, block11: 0});
+    }
+  }
+
   handleKey(e) {
     switch (e.key) {
       case 'ArrowUp':
-        console.log('up');
+        this.arrowUp();
       case 'ArrowDown':
 
       case 'ArrowLeft':
