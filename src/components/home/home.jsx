@@ -12,7 +12,7 @@ class Home extends React.Component {
     };
     this.createRow = this.createRow.bind(this);
     this.handleKey = this.handleKey.bind(this);
-    this.arrowUp = this.arrowUp.bind(this);
+    this.addBlock = this.addBlock.bind(this);
   }
 
   componentDidMount() {
@@ -30,33 +30,38 @@ class Home extends React.Component {
   }
 
 
-  arrowUp() {
-    let newGrid = this.state.grid.slice(0);
-    let swap = true;
-    while (swap) {
-      swap = false;
+  addBlock(grid) {
+    let newGrid = grid.slice(0);
+    for (var a = 0; a < 4; a++) {
       for (var i = 0; i < 3; i++) {
         for (var j = 0; j < 4; j++) {
-          if (newGrid[i][j] === 0) {
-            newGrid[i][j] = newGrid[i+1][j];
-            newGrid[i+1][j] = 0;
-          } else if (newGrid[i][j] === newGrid[i+1][j]) {
+          if (newGrid[i][j] === newGrid[i+1][j] && newGrid[i][j] !== 0) {
             newGrid[i][j] = newGrid[i][j]*2;
             newGrid[i+1][j] = 0;
-            swap = true;
+          }
+          if (newGrid[i][j] === 0 && newGrid[i+1][j] !== 0) {
+            const val = newGrid[i+1][j];
+            newGrid[i][j] = val;
+            newGrid[i+1][j] = 0;
           }
         }
       }
     }
-    this.setState({grid: newGrid});
+    return newGrid;
   }
 
   handleKey(e) {
+    console.log(e.key);
     switch (e.key) {
       case 'ArrowUp':
-        this.arrowUp();
+        let upGrid = this.addBlock(this.state.grid.slice(0));
+        this.setState( {grid: upGrid} );
+        break;
       case 'ArrowDown':
-
+        let downGrid = this.addBlock(this.state.grid.slice(0).reverse());
+        downGrid.reverse();
+        this.setState( {grid: downGrid} );
+        break;
       case 'ArrowLeft':
 
       case 'ArrowRight':
