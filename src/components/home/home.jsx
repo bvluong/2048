@@ -23,6 +23,11 @@ class Home extends React.Component {
       block34: 0
     };
     this.createRow.bind(this);
+    this.handleKey.bind(this);
+  }
+
+  componentDidMount() {
+    document.addEventListener("keydown", this.handleKey);
   }
 
   createRow(rowNum) {
@@ -30,12 +35,26 @@ class Home extends React.Component {
     for (var i = 1; i < 5; i++) {
       let blockID = `block${rowNum}${i.toString()}`;
 
-      row.push(<div className="block ${rowNum}${i.toString()}">
+      row.push(<div key={i} className="block ${rowNum}${i.toString()}">
         {this.state[blockID] === 0 ? "" : this.state[blockID]}
       </div>);
     }
-
     return row;
+  }
+
+  handleKey(e) {
+    switch (e.key) {
+      case 'ArrowUp':
+        console.log('up');
+      case 'ArrowDown':
+
+      case 'ArrowLeft':
+
+      case 'ArrowRight':
+
+      default:
+
+    }
   }
 
   render () {
