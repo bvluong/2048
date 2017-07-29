@@ -5,7 +5,10 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      grid: [[2,0,0,0],[2,2,0,0],[0,8,0,0],[0,0,0,0]]
+      grid: [[2,0,0,0],
+             [2,2,0,0],
+             [4,8,0,0],
+             [0,0,0,0]]
     };
     this.createRow = this.createRow.bind(this);
     this.handleKey = this.handleKey.bind(this);
@@ -28,6 +31,24 @@ class Home extends React.Component {
 
 
   arrowUp() {
+    let newGrid = this.state.grid.slice(0);
+    let swap = true;
+    while (swap) {
+      swap = false;
+      for (var i = 0; i < 3; i++) {
+        for (var j = 0; j < 4; j++) {
+          if (newGrid[i][j] === 0) {
+            newGrid[i][j] = newGrid[i+1][j];
+            newGrid[i+1][j] = 0;
+          } else if (newGrid[i][j] === newGrid[i+1][j]) {
+            newGrid[i][j] = newGrid[i][j]*2;
+            newGrid[i+1][j] = 0;
+            swap = true;
+          }
+        }
+      }
+    }
+    this.setState({grid: newGrid});
   }
 
   handleKey(e) {
