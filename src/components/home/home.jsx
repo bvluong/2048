@@ -50,24 +50,21 @@ class Home extends React.Component {
     return newGrid;
   }
 
-  tranposeGrid() {
-    let grid = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
+  leftGrid(oldGrid, tranposeBool) {
+    let grid = [[],[],[],[]];
     for (var i = 0; i < 4; i++) {
       for (var j = 0; j < 4; j++) {
-        grid[i][j] = this.state.grid[j][i];
+        if (tranposeBool) {
+          grid[i][j] = oldGrid[j][i];
+        } else {
+          grid[j][i] = oldGrid[i][j];
+        }
       }
     }
     return grid;
   }
 
-  untranposeGrid(oldGrid) {
-    let grid = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
-    for (var i = 0; i < 4; i++) {
-      for (var j = 0; j < 4; j++) {
-        grid[j][i] = oldGrid[i][j]
-      }
-    }
-    return grid
+  rightGrid() {
   }
 
   handleKey(e) {
@@ -82,8 +79,8 @@ class Home extends React.Component {
         this.setState( {grid: downGrid} );
         break;
       case 'ArrowLeft':
-        let leftGrid = this.addBlock(this.tranposeGrid());
-        leftGrid = this.untranposeGrid(leftGrid);
+        let leftGrid = this.addBlock(this.leftGrid(this.state.grid.slice(0),true));
+        leftGrid = this.leftGrid(leftGrid,false);
         this.setState( {grid: leftGrid } );
       case 'ArrowRight':
 
