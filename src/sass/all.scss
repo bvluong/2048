@@ -1,12 +1,18 @@
 @import 'reset';
 
+.home {
+  margin: auto;
+}
+
 .block {
   width: 150px;
   height: 150px;
   border: 1px solid black;
+  margin: 5px;
+  font-size: 100px;
+  text-align: center;
 }
 
 .row {
   display: flex;
-  
 }
