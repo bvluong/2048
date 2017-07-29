@@ -5,9 +5,9 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      grid: [[2,0,0,0],
+      grid: [[0,0,0,0],
              [2,2,0,0],
-             [4,8,0,0],
+             [0,0,0,0],
              [0,0,0,0]]
     };
     this.createRow = this.createRow.bind(this);
@@ -31,7 +31,7 @@ class Home extends React.Component {
 
 
   addBlock(grid) {
-    let newGrid = grid.slice(0);
+    let newGrid = grid.map(row => row.slice(0));
     for (var a = 0; a < 4; a++) {
       for (var i = 0; i < 3; i++) {
         for (var j = 0; j < 4; j++) {
@@ -79,29 +79,73 @@ class Home extends React.Component {
   }
 
   handleKey(e) {
+    let oldGridState = this.state.grid.slice(0);
+    let newGrid = this.state.grid.slice(0);
     switch (e.key) {
       case 'ArrowUp':
-        let upGrid = this.addBlock(this.state.grid.slice(0));
+        let upGrid = this.addBlock(newGrid);
         this.setState( {grid: upGrid} );
         break;
       case 'ArrowDown':
-        let downGrid = this.addBlock(this.state.grid.slice(0).reverse());
+        let downGrid = this.addBlock(newGrid.reverse());
         downGrid.reverse();
         this.setState( {grid: downGrid} );
         break;
       case 'ArrowLeft':
-        let leftGrid = this.addBlock(this.leftGrid(this.state.grid.slice(0),true));
+        let leftGrid = this.addBlock(this.leftGrid(newGrid,true));
         leftGrid = this.leftGrid(leftGrid,false);
         this.setState( {grid: leftGrid } );
         break;
       case 'ArrowRight':
-        let rightGrid = this.addBlock(this.rightGrid(this.state.grid.slice(0),true));
+        let rightGrid = this.addBlock(this.rightGrid(newGrid,true));
         rightGrid = this.rightGrid(rightGrid,false);
         this.setState( {grid: rightGrid } );
         break;
       default:
-
+        return;
     }
+    if (this.gameOver()) {
+      this.setState({grid:
+                  [[0,0,0,0],
+                   [2,2,0,0],
+                   [0,0,0,0],
+                   [0,0,0,0]]});
+    } else if (!this.compare(oldGridState)) {
+      this.placeNum();
+    }
+  }
+
+  compare(oldGridState) {
+    console.log(oldGridState);
+    console.log(this.state.grid);
+    for (var i = 0; i < 4; i++) {
+      for (var j = 0; j < 4; j++) {
+        if (oldGridState[i][j] !== this.state.grid[i][j]) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  gameOver() {
+    return this.state.grid.every(row => row.every(block => block !== 0));
+  }
+
+  placeNum() {
+    const possibleMoves = [];
+    for (var i = 0; i < 4; i++) {
+      for (var j = 0; j < 4; j++) {
+        if (this.state.grid[i][j] === 0) {
+          possibleMoves.push([i,j]);
+        }
+      }
+    }
+    let grid = this.state.grid.slice(0);
+    let blockIdx = possibleMoves[Math.floor(Math.random()*possibleMoves.length)];
+    grid[blockIdx[0]][blockIdx[1]] = 2;
+    this.setState({grid});
+
   }
 
   render () {
