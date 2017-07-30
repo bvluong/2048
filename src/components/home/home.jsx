@@ -22,8 +22,9 @@ class Home extends React.Component {
   createRow(rowNum) {
     const row = [];
     for (var i = 0; i < 4; i++) {
-      row.push(<div key={i} className="block">
-        {this.state.grid[rowNum][i] === 0 ? "" : this.state.grid[rowNum][i]}
+      let empty = (this.state.grid[rowNum][i] === 0);
+      row.push(<div key={i} className={`block ${empty ? "empty" : "filled"}`}>
+        {empty ? "" : this.state.grid[rowNum][i]}
       </div>);
     }
     return row;
@@ -163,7 +164,6 @@ class Home extends React.Component {
     let blockIdx = possibleMoves[Math.floor(Math.random()*possibleMoves.length)];
     grid[blockIdx[0]][blockIdx[1]] = 2;
     this.setState({grid});
-
   }
 
   render () {
