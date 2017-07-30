@@ -32,6 +32,8 @@ class Home extends React.Component {
 
   addBlock(grid) {
     let newGrid = grid.map(row => row.slice(0));
+    let usedMoves = [];
+
     for (var a = 0; a < 4; a++) {
       for (var i = 0; i < 3; i++) {
         for (var j = 0; j < 4; j++) {
@@ -116,8 +118,6 @@ class Home extends React.Component {
   }
 
   compare(oldGridState) {
-    console.log(oldGridState);
-    console.log(this.state.grid);
     for (var i = 0; i < 4; i++) {
       for (var j = 0; j < 4; j++) {
         if (oldGridState[i][j] !== this.state.grid[i][j]) {

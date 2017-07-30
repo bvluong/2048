@@ -1,18 +1,20 @@
 @import 'reset';
 
-
 .home {
   background: #BD897E;
   margin: auto;
-  position: absolute;
-  left: 25%;
+  display: grid;
+  height: 100%;
+  width: 100%;
+  grid-template-columns: repeat(20, 5%);
+  grid-template-rows: repeat(20, 5%);
 }
 
 .block {
-  width: 120px;
+  width: 100%;
   background: #FFEED6;
-  border-radius: 2px;
-  height: 120px;
+  border-radius: 5px;
+  height: 100%;
   border: 3px solid black;
   margin: 5px;
   font-size: 80px;
@@ -21,4 +23,24 @@
 
 .row {
   display: flex;
+}
+
+.row-0 {
+  grid-row: 1 / 5;
+  grid-column: 6 / 15;
+}
+
+.row-1 {
+  grid-row: 6 / 10;
+  grid-column: 6 / 15;
+}
+
+.row-2 {
+  grid-row: 11 / 15;
+  grid-column: 6 / 15;
+}
+
+.row-3 {
+  grid-row: 16 / 20;
+  grid-column: 6 / 15;
 }
