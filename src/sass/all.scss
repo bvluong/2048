@@ -1,20 +1,21 @@
 @import 'reset';
 
+
 .home {
+  background: #BD897E;
   margin: auto;
-  background: grey;
   position: absolute;
   left: 25%;
 }
 
 .block {
   width: 120px;
-  background: grey;
+  background: #FFEED6;
   border-radius: 2px;
   height: 120px;
-  border: 1px solid black;
+  border: 3px solid black;
   margin: 5px;
-  font-size: 90px;
+  font-size: 80px;
   text-align: center;
 }
 
