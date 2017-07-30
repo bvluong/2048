@@ -5,10 +5,10 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      grid: [[0,0,0,0],
+      grid: [[2,2,0,2],
+             [2,0,0,2],
              [2,2,0,0],
-             [0,0,0,0],
-             [0,0,0,0]]
+             [2,0,0,2]]
     };
     this.createRow = this.createRow.bind(this);
     this.handleKey = this.handleKey.bind(this);
@@ -32,19 +32,37 @@ class Home extends React.Component {
 
   addBlock(grid) {
     let newGrid = grid.map(row => row.slice(0));
-    let usedMoves = [];
+    for (var i = 0; i < 3; i++) {
+      for (var j = 0; j < 4; j++) {
+        this.combineBlock(newGrid,i,j);
+      }
+    }
+    this.moveBlock(newGrid);
 
-    for (var a = 0; a < 4; a++) {
-      for (var i = 0; i < 3; i++) {
+    return newGrid;
+  }
+
+  combineBlock(newGrid,row,col) {
+    for (var i = 1; i < 4-row; i++) {
+      if (newGrid[row][col] === newGrid[row+i][col]) {
+        newGrid[row][col] = newGrid[row+i][col]*2;
+        newGrid[row+i][col] = 0;
+        break;
+      }
+    }
+  }
+
+  moveBlock(newGrid) {
+    let swap = true;
+    while (swap) {
+      swap = false;
+      for (var i = 3; i > 0; i--) {
         for (var j = 0; j < 4; j++) {
-          if (newGrid[i][j] === newGrid[i+1][j] && newGrid[i][j] !== 0) {
-            newGrid[i][j] = newGrid[i][j]*2;
-            newGrid[i+1][j] = 0;
-          }
-          if (newGrid[i][j] === 0 && newGrid[i+1][j] !== 0) {
-            const val = newGrid[i+1][j];
-            newGrid[i][j] = val;
-            newGrid[i+1][j] = 0;
+          if (newGrid[i][j] !== 0 && newGrid[i-1][j] === 0) {
+            swap = true;
+            const val = newGrid[i][j];
+            newGrid[i-1][j] = val;
+            newGrid[i][j] = 0;
           }
         }
       }
