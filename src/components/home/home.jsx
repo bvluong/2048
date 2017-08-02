@@ -125,14 +125,28 @@ class Home extends React.Component {
       default:
         return;
     }
+    this.checkGameState();
+
+    if (!this.compare(oldGridState)) {
+      this.addRandomNum();
+    }
+  }
+
+  checkGameState() {
+    if (this.winner()) {
+      this.displayWinner();
+      this.setState({grid:
+                  [[0,0,0,0],
+                   [2,2,0,0],
+                   [0,0,0,0],
+                   [0,0,0,0]]});
+    }
     if (this.gameOver()) {
       this.setState({grid:
                   [[0,0,0,0],
                    [2,2,0,0],
                    [0,0,0,0],
                    [0,0,0,0]]});
-    } else if (!this.compare(oldGridState)) {
-      this.addRandomNum();
     }
   }
 
@@ -149,6 +163,10 @@ class Home extends React.Component {
 
   gameOver() {
     return this.state.grid.every(row => row.every(block => block !== 0));
+  }
+
+  winner() {
+    return this.state.grid.some(row => row.some(block => block === 2048));
   }
 
   addRandomNum() {
