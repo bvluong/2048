@@ -132,7 +132,7 @@ class Home extends React.Component {
                    [0,0,0,0],
                    [0,0,0,0]]});
     } else if (!this.compare(oldGridState)) {
-      this.placeNum();
+      this.addRandomNum();
     }
   }
 
@@ -151,7 +151,7 @@ class Home extends React.Component {
     return this.state.grid.every(row => row.every(block => block !== 0));
   }
 
-  placeNum() {
+  addRandomNum() {
     const possibleMoves = [];
     for (var i = 0; i < 4; i++) {
       for (var j = 0; j < 4; j++) {
@@ -162,7 +162,8 @@ class Home extends React.Component {
     }
     let grid = this.state.grid.slice(0);
     let blockIdx = possibleMoves[Math.floor(Math.random()*possibleMoves.length)];
-    grid[blockIdx[0]][blockIdx[1]] = 2;
+    let val = (Math.random() > 0.9 ? 4 : 2);
+    grid[blockIdx[0]][blockIdx[1]] = val;
     this.setState({grid});
   }
 
