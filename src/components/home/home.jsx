@@ -165,8 +165,29 @@ class Home extends React.Component {
     return this.state.grid.every(row => row.every(block => block !== 0));
   }
 
+  checkAdjBlock(row,col,val) {
+    const posAdj = [[-1,0],[0,-1],[1,0],[0,1]];
+    posAdj.some(pos => {
+      let newRow = row+pos[0];
+      let newCol = col+pos[1];
+      if (this.validPos(newRow,newCol)) {
+        val == this.state.grid[newRow][newCol];
+      } else {
+        false;
+      }
+    });
+  }
+
+  validPos(row,col) {
+    row >= 0 && col >= 0 && row < 5 && col < 5;
+  }
+
   winner() {
     return this.state.grid.some(row => row.some(block => block === 2048));
+  }
+
+  displayWinner() {
+
   }
 
   addRandomNum() {
