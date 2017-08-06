@@ -162,10 +162,26 @@ class Home extends React.Component {
   }
 
   gameOver() {
+    return this.full() && this.checkAllAdj();
+  }
+
+  checkAllAdj() {
+    for (var i = 0; i < 4; i++) {
+      for (var j = 0; j < 4; j++) {
+        if (this.checkAdjBlock(i,j)) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  full() {
     return this.state.grid.every(row => row.every(block => block !== 0));
   }
 
-  checkAdjBlock(row,col,val) {
+  checkAdjBlock(row,col) {
+    const val = this.state.grid[row][col];
     const posAdj = [[-1,0],[0,-1],[1,0],[0,1]];
     posAdj.some(pos => {
       let newRow = row+pos[0];
@@ -179,7 +195,7 @@ class Home extends React.Component {
   }
 
   validPos(row,col) {
-    row >= 0 && col >= 0 && row < 5 && col < 5;
+    return row >= 0 && col >= 0 && row < 4 && col < 4;
   }
 
   winner() {
